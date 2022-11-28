@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[])
+{
     char text1[50];
     char text2[] = "Temp";
     char text3[17] = "Hello this world";
@@ -15,9 +16,9 @@ int main(int argc, char* argv[]) {
     // printf("\n");
 
     // strcpy(text1, text3);
-    
-    strncpy(text1, text3, 16);
-    text1[16] = '\0';
+
+    strncpy(text1, text3, strlen(text3) + 1);
+    text1[strlen(text3)] = '\0';
 
     printf("%s\n%s\n%s\n", text1, text2, text3);
 
