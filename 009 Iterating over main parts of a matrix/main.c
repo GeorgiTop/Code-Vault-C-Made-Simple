@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #define X 5
-#define Y 5
+#define Y 6
 
 void print_primary_diagonal(int size, int matrix[size][size]);
 void print_primary_diagonal_complex(int x, int y, int matrix[x][y]);
@@ -108,9 +108,9 @@ void print_primary_diagonal_complex(int x, int y, int matrix[x][y])
 void print_secondary_diagonal(int x, int y, int matrix[x][y])
 {
     int i, j;
-    for (i = 0; i < x; i++) // Itterate Rows
+    for (i = 0; i < x; i++) // iterate Rows
     {
-        for (j = 0; j < y; j++) // Itterate colums
+        for (j = 0; j < y; j++) // iterate colums
         {
             if (i + j == x - 1) // Secondary diagonal
             {
@@ -128,9 +128,9 @@ void print_secondary_diagonal(int x, int y, int matrix[x][y])
 void print_secondary_diagonal_complex(int x, int y, int matrix[x][y])
 {
     int i, j;
-    for (i = 0; i < x; i++) // Itterate Rows
+    for (i = 0; i < x; i++) // iterate Rows
     {
-        for (j = 0; j < y; j++) // Itterate colums
+        for (j = 0; j < y; j++) // iterate colums
         {
             if (i + j == x - 1 && i + j == y - 1) // Secondary diagonal
             {
@@ -148,9 +148,9 @@ void print_secondary_diagonal_complex(int x, int y, int matrix[x][y])
 void print_primary_top_half(int x, int y, int matrix[x][y])
 {
     int i, j;
-    for (i = 0; i < x; i++) // Itterate Rows
+    for (i = 0; i < x; i++) // iterate Rows
     {
-        for (j = 0; j < y; j++) // Itterate colums
+        for (j = 0; j < y; j++) // iterate colums
         {
             if (i < j) // Top right half without the diagonal
             {
@@ -168,9 +168,9 @@ void print_primary_top_half(int x, int y, int matrix[x][y])
 void print_primary_bottom_half(int x, int y, int matrix[x][y])
 {
     int i, j;
-    for (i = 0; i < x; i++) // Itterate Rows
+    for (i = 0; i < x; i++) // iterate Rows
     {
-        for (j = 0; j < y; j++) // Itterate colums
+        for (j = 0; j < y; j++) // iterate colums
         {
             if (i > j) // Bottom left half without the diagonal
             {
@@ -188,9 +188,9 @@ void print_primary_bottom_half(int x, int y, int matrix[x][y])
 void print_secondary_top_half(int x, int y, int matrix[x][y])
 {
     int i, j;
-    for (i = 0; i < x; i++) // Itterate Rows
+    for (i = 0; i < x; i++) // iterate Rows
     {
-        for (j = 0; j < y; j++) // Itterate colums
+        for (j = 0; j < y; j++) // iterate colums
         {
             if (i + j < y - 1) // Top right half without the diagonal
             {
@@ -205,12 +205,16 @@ void print_secondary_top_half(int x, int y, int matrix[x][y])
     }
 }
 
+/// @brief Prints given matrix's bottom left half without the diagonal
+/// @param x number of rows to iterate over
+/// @param y number of colums to iterate over
+/// @param matrix [x][y]
 void print_secondary_bottom_half(int x, int y, int matrix[x][y])
 {
     int i, j;
-    for (i = 0; i < x; i++) // Itterate Rows
+    for (i = 0; i < x; i++) // iterate Rows
     {
-        for (j = 0; j < y; j++) // Itterate Colums
+        for (j = 0; j < y; j++) // iterate Colums
         {
             if (i + j > x - 1) // Bottom left half without the diagonal
             {
@@ -228,9 +232,9 @@ void print_secondary_bottom_half(int x, int y, int matrix[x][y])
 void print_triangle_top(int x, int y, int matrix[x][y])
 {
     int i, j;
-    for (i = 0; i < x; i++) // Itterate Rows
+    for (i = 0; i < x; i++) // iterate Rows
     {
-        for (j = 0; j < y; j++) // Itterate Colums
+        for (j = 0; j < y; j++) // iterate Colums
         {
             if (i < j && x - i - 1 > j) // Top triangle between the diagonals
             {
@@ -248,9 +252,9 @@ void print_triangle_top(int x, int y, int matrix[x][y])
 void print_triangle_right(int x, int y, int matrix[x][y])
 {
     int i, j;
-    for (i = 0; i < x; i++) // Itterate Rows
+    for (i = 0; i < x; i++) // iterate Rows
     {
-        for (j = 0; j < y; j++) // Itterate Colums
+        for (j = 0; j < y; j++) // iterate Colums
         {
             if (i < j && y - 1 < i + j) // Right triangle between the diagonals
             {
@@ -268,9 +272,9 @@ void print_triangle_right(int x, int y, int matrix[x][y])
 void print_triangle_bottom(int x, int y, int matrix[x][y])
 {
     int i, j;
-    for (i = 0; i < x; i++) // Itterate Rows
+    for (i = 0; i < x; i++) // iterate Rows
     {
-        for (j = 0; j < y; j++) // Itterate Colums
+        for (j = 0; j < y; j++) // iterate Colums
         {
             if (i > j && x - i - 1 < j) // Bottom triangle between the diagonals
             {
@@ -288,9 +292,9 @@ void print_triangle_bottom(int x, int y, int matrix[x][y])
 void print_triangle_left(int x, int y, int matrix[x][y])
 {
     int i, j;
-    for (i = 0; i < x; i++) // Itterate Rows
+    for (i = 0; i < x; i++) // iterate Rows
     {
-        for (j = 0; j < y; j++) // Itterate Colums
+        for (j = 0; j < y; j++) // iterate Colums
         {
             if (i > j && y - i - 1 > j) // Left triangle between the diagonals
             {
