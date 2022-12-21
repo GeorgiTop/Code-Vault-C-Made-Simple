@@ -18,25 +18,19 @@ void binaryRepresentation(char *outputArray, void *thingToCheck, int sizeOfThing
             // add the bit to the output array at the propper index as a char
             outputArray[(i * 8) + (7 - j)] = bit + '0';
         }
-
-        // insert space for visual purposes
-        if (i >= 1 && i)
-        {
-            outputArray[8 * i] = " ";
-        }
     }
     return;
 }
 
 int main(int argc, char const *argv[])
 {
-    int a = 13;
+    int a = 2576980377;
 
     printf("    Decimal: %d\n", a);
-    printf("Hexadecimal: %08x\n", a);
+    printf("Hexadecimal: %08X\n", a);
     printf("      Octal: %011o\n", a);
 
-    // comment the next 2 lines if you want to try the original from line 46 (it has off by 1 issue)
+    // comment the next 2 lines if you want to try the original from line 40 (it has off by 1 issue)
     char arr[sizeof(int) * 8 + (sizeof(int))];
     binaryRepresentation(arr, a, sizeof(int));
 
