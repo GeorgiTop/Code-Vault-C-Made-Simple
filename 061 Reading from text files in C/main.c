@@ -36,7 +36,7 @@ int main( int argc, char const *argv[] )
 
     // if ( bytes_wrote != strlen( buffer_out ) )
     // {
-    //     return 1;
+    //     return 2;
     // };
 
     // READ from a File
@@ -45,14 +45,14 @@ int main( int argc, char const *argv[] )
     fopen_s( &in, "point.dat", "r" );
     if ( in == NULL )
     {
-        return 1;
+        return 3;
     }
 
     // Reading the file with fgets as far right or up to 256 bytes from our file stream to our buffer
     if ( fgets( buffer_in, 256, in ) == NULL )
     {
         fclose( in );
-        return 1;
+        return 4;
     }
     fclose( in );
 
