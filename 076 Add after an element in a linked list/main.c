@@ -41,6 +41,23 @@ void insert_end( Node **root, int value )
     curr->next = new_node;
 }
 
+void insert_beginning( Node **root, int value )
+{
+    Node *new_node = node_init( value, *root );
+    *root          = new_node;
+}
+
+void insert_after( Node *node, int value )
+{
+    if ( node == NULL )
+    {
+        exit(2);
+    }
+
+    Node *new_node = node_init( value, node->next );
+    node->next     = new_node;
+}
+
 void deallocate( Node **root )
 {
     Node *curr = *root;
@@ -53,11 +70,11 @@ void deallocate( Node **root )
     *root = NULL;
 }
 
-void recursive_dealloc( Node **root)
+void recursive_dealloc( Node **root )
 {
-    if ((*root)->next != NULL)
+    if ( ( *root )->next != NULL )
     {
-        recursive_dealloc( &(*root)->next );
+        recursive_dealloc( &( *root )->next );
     }
     free( *root );
     *root = NULL;
@@ -67,8 +84,11 @@ int main( int argc, char const *argv[] )
 {
     // Node *root = node_init( 15, NULL );
     Node *root = NULL;
+
+    insert_beginning( &root, 7 );
     insert_end( &root, 15 );
     insert_end( &root, -2 );
+    insert_after( root->next, 3 );
     insert_end( &root, 42 );
 
     Node *curr = root;
