@@ -139,9 +139,21 @@ void reverse( Node **root )
     *root = prev;
 }
 
-void recursive_reverse( Node **root )
+// Reverses the order of elements within a Linked List recursively
+void recursive_reverse( Node **root, Node *prev )
 {
-    // TODO    
+    if ( *root == NULL )
+    {
+        return;
+    }
+    Node *curr = (*root);
+    Node *next = curr->next;
+    curr->next = prev;
+    recursive_reverse( &next, curr );
+    if ( next != NULL )
+    {
+        *root = next;
+    }
 }
 
 // Deallocate all linked Node elements
@@ -188,7 +200,7 @@ int main( int argc, char const *argv[] )
         curr = curr->next;
     }
 
-    reverse( &root );
+    recursive_reverse( &root, NULL );
 
     printf( "For Loop prints\n" );
     // Node *curr;
