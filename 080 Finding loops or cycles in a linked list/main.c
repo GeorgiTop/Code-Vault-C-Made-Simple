@@ -214,12 +214,12 @@ int main( int argc, char const *argv[] )
     insert_sorted( &root, 3 );
     insert_sorted( &root, 42 );
 
-    // root->next->next->next->next->next = root->next;
-    // if (has_loops(root) == 1)
-    // {
-    //     printf("Linked list has a loop\n");
-    //     return 3;
-    // }
+    root->next->next->next->next->next = root->next;
+    if (has_loops(root) == 1)
+    {
+        printf("Linked list has a loop\n");
+        return 3;
+    }
 
     Node *curr = root;
 
