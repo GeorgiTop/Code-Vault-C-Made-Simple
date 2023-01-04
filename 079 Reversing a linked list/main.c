@@ -139,21 +139,23 @@ void reverse( Node **root )
     *root = prev;
 }
 
-// Reverses the order of elements within a Linked List recursively
-void recursive_reverse( Node **root, Node *prev )
+// Reverses the order from a given element to the end of a linked list
+// @returns Node * to the last element of the list
+Node *recursive_reverse_swap(Node *curr, Node *prev)
 {
-    if ( *root == NULL )
+    if ( curr == NULL )
     {
-        return;
+        return prev;
     }
-    Node *curr = (*root);
     Node *next = curr->next;
     curr->next = prev;
-    recursive_reverse( &next, curr );
-    if ( next != NULL )
-    {
-        *root = next;
-    }
+    recursive_reverse_swap( next, curr );
+}
+
+// Reverses the order of elements within a Linked List recursively
+void recursive_reverse( Node **root )
+{  
+    *root = recursive_reverse_swap( *root, NULL );
 }
 
 // Deallocate all linked Node elements
@@ -200,7 +202,7 @@ int main( int argc, char const *argv[] )
         curr = curr->next;
     }
 
-    recursive_reverse( &root, NULL );
+    recursive_reverse( &root );
 
     printf( "For Loop prints\n" );
     // Node *curr;

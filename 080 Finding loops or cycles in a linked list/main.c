@@ -139,21 +139,27 @@ void reverse( Node **root )
     *root = prev;
 }
 
+// Reverses the order from a given element to the end of a linked list
+// @returns Node * to the last element of the list
+Node *recursive_reverse_swap(Node *curr, Node *prev)
+{
+    if ( curr == NULL )
+    {
+        return prev;
+    }
+    Node *next = curr->next;
+    curr->next = prev;
+    recursive_reverse_swap( next, curr );
+}
+
 // Reverses the order of elements within a Linked List recursively
-void recursive_reverse( Node **root, Node *prev )
+void recursive_reverse( Node **root )
 {
     if ( *root == NULL )
     {
         return;
-    }
-    Node *curr = (*root);
-    Node *next = curr->next;
-    curr->next = prev;
-    recursive_reverse( &next, curr );
-    if ( next != NULL )
-    {
-        *root = next;
-    }
+    }    
+    *root = recursive_reverse_swap( *root, NULL );
 }
 
 int has_loops( Node *root )
@@ -208,12 +214,12 @@ int main( int argc, char const *argv[] )
     insert_sorted( &root, 3 );
     insert_sorted( &root, 42 );
 
-    root->next->next->next->next->next = root->next;
-    if (has_loops(root) == 1)
-    {
-        printf("Linked list has a loop\n");
-        return 3;
-    }
+    // root->next->next->next->next->next = root->next;
+    // if (has_loops(root) == 1)
+    // {
+    //     printf("Linked list has a loop\n");
+    //     return 3;
+    // }
 
     Node *curr = root;
 
@@ -224,7 +230,7 @@ int main( int argc, char const *argv[] )
         curr = curr->next;
     }
 
-    reverse( &root );
+    recursive_reverse( &root );
 
     printf( "For Loop prints\n" );
     // Node *curr;
