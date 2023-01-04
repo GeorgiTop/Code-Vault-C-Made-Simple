@@ -1,0 +1,257 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Linked list Node element
+typedef struct Node
+{
+    int          x;
+    struct Node *next;
+} Node;
+
+// Malloc Node element or exit with code 1
+Node *node_init( int value, Node *next_node )
+{
+    Node *new_node = malloc( sizeof( Node ) );
+    if ( new_node == NULL )
+    {
+        exit( 1 );
+    }
+    new_node->x    = value;
+    new_node->next = next_node;
+    return new_node;
+}
+
+// Malloc New node at the end of a Linked List
+void insert_end( Node **root, int value )
+{
+    // Node Init
+    Node *new_node = node_init( value, NULL );
+
+    // Insertion point is the start
+    if ( *root == NULL )
+    {
+        *root = new_node;
+        return;
+    }
+    // Search for the last element
+    Node *curr = *root;
+    while ( curr->next != NULL )
+    {
+        curr = curr->next;
+    }
+
+    // Insertion
+    curr->next = new_node;
+}
+
+// Malloc New Node at the beginning of a linked list
+void insert_beginning( Node **root, int value )
+{
+    Node *new_node = node_init( value, *root );
+    *root          = new_node;
+}
+
+// Malloc New Node after a Node or exit with code 2 if node is NULL
+void insert_after( Node *node, int value )
+{
+    if ( node == NULL )
+    {
+        exit( 2 );
+    }
+
+    Node *new_node = node_init( value, node->next );
+    node->next     = new_node;
+}
+
+// Suposed use is in already sorted linked list
+void insert_sorted( Node **root, int value )
+{
+    // special cases
+    // empty root or new value/element should be first
+    // -- ( *root )->x >= value -- ascending order, recent first/LIFO (Stack)
+    // -- ( *root )->x > value -- ascending order, recent first/FIFO (Queue)
+    // -- ( *root )->x <= value -- descending order, recent first/LIFO (Stack)
+    // -- ( *root )->x < value -- descending order, recent first/FIFO (Queue)
+    if ( *root == NULL || ( *root )->x >= value )
+    {
+        insert_beginning( root, value );
+        return;
+    }
+
+    // Find element to add after(before)
+    Node *curr = *root;
+    while ( curr->next != NULL )
+    {
+        // -- curr->next->x >= value -- ascending order, recent first/LIFO (Stack)
+        // -- curr->next->x > value -- ascending order, recent last/FIFO (Queue)
+        // -- curr->next->x <= value -- descending order, recent first/LIFO (Stack)
+        // -- curr->next->x < value -- descending order, recent last/FIFO (Queue)
+        if ( curr->next->x >= value )
+        {
+            break;
+        }
+        curr = curr->next;
+    }
+    // curr node is the, but we still have to insert the value
+    insert_after( curr, value );
+}
+
+void remove_element( Node **root, int value )
+{
+    if ( *root == NULL )
+    {
+        return;
+    }
+
+    if ( ( *root )->x == value )
+    {
+        Node *to_remove = *root;
+        *root           = ( *root )->next;
+        free( to_remove );
+        return;
+    }
+    Node *curr = *root;
+    while ( curr->next != NULL )
+    {
+        if ( curr->next->x == value )
+        {
+            Node *to_remove = curr->next;
+            curr->next      = curr->next->next;
+            free( to_remove );
+            return;
+        }
+        curr = curr->next;
+    }
+}
+
+// Reverses the order of elements within a Linked List
+void reverse( Node **root )
+{
+    Node *prev = NULL;
+    Node *curr = *root;
+    while ( curr != NULL )
+    {
+        Node *next = curr->next;
+        curr->next = prev;
+        prev       = curr;
+        curr       = next;
+    }
+    *root = prev;
+}
+
+// Reverses the order from a given element to the end of a linked list
+// @returns Node * to the last element of the list
+Node *recursive_reverse_swap(Node *curr, Node *prev)
+{
+    if ( curr == NULL )
+    {
+        return prev;
+    }
+    Node *next = curr->next;
+    curr->next = prev;
+    recursive_reverse_swap( next, curr );
+}
+
+// Reverses the order of elements within a Linked List recursively
+void recursive_reverse( Node **root )
+{  
+    *root = recursive_reverse_swap( *root, NULL );
+}
+
+int has_loops( Node *root )
+{
+    Node *slow = root;
+    Node *fast = root;
+
+    while ( slow != NULL && fast != NULL && fast->next != NULL )
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+        if ( slow == fast )
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int count( Node *root )
+{
+    int   count = 0;
+    Node *curr  = root;
+    for ( curr = root; curr != NULL; curr = curr->next )
+    {
+        count++;
+    }
+    return count;
+}
+
+int recusive_count( Node *node )
+{
+    if (node == NULL)
+    {
+        return 0;
+    }
+    return 1 + recusive_count(node->next);
+}
+
+// Deallocate all linked Node elements
+void deallocate( Node **root )
+{
+    Node *curr = *root;
+    while ( curr != NULL )
+    {
+        Node *aux = curr;
+        curr      = curr->next;
+        free( aux );
+    }
+    *root = NULL;
+}
+
+// Deallocate recursively all linked Node elements
+void recursive_dealloc( Node **root )
+{
+    if ( ( *root )->next != NULL )
+    {
+        recursive_dealloc( &( *root )->next );
+    }
+    free( *root );
+    *root = NULL;
+}
+
+int main( int argc, char const *argv[] )
+{
+    // Node *root = node_init( 15, NULL );
+    Node *root = NULL;
+
+    insert_end( &root, 1 );
+    insert_end( &root, 1 );
+    insert_end( &root, 3 );
+    insert_end( &root, 6 );
+    insert_end( &root, 42 );
+
+
+    Node *curr = root;
+
+    printf( "While Loop prints\n" );
+    while ( curr != NULL )
+    {
+        printf( "%d\n", curr->x );
+        curr = curr->next;
+    }
+
+    printf( "Linked list has %d elements\n", count( root ) );
+    reverse( &root );
+
+    printf( "For Loop prints\n" );
+    // Node *curr;
+    for ( curr = root; curr != NULL; curr = curr->next )
+    {
+        printf( "%d\n", curr->x );
+    }
+    printf( "Linked list has %d elements\n", recusive_count( root ) );
+    // recursive_dealloc( &root );
+    deallocate( &root );
+
+    return 0;
+}
