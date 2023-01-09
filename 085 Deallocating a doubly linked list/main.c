@@ -10,6 +10,24 @@ struct Node
 };
 typedef struct Node Node;
 
+void deallocate( Node **tail, Node **head )
+{
+    if ( tail == NULL )
+    {
+        return;
+    }
+
+    Node *curr = *tail;
+    while ( curr->next != NULL )
+    {
+        curr = curr->next;
+        free( curr->prev );
+    }
+    free( curr );
+    *tail = NULL;
+    *head = NULL;
+}
+
 int main( int argc, char const *argv[] )
 {
     Node *tail = malloc( sizeof( Node ) );
@@ -34,7 +52,7 @@ int main( int argc, char const *argv[] )
     tail->next->next->x    = 7;
     tail->next->next->prev = tail->next;
     tail->next->next->next = NULL;
-    Node *head = tail->next->next;
+    Node *head             = tail->next->next;
 
     Node *curr;
     for ( curr = tail; curr != NULL; curr = curr->next )
@@ -43,13 +61,13 @@ int main( int argc, char const *argv[] )
     }
 
     curr = head;
-    while(curr != NULL)
+    while ( curr != NULL )
     {
         printf( "%d\n", curr->x );
         curr = curr->prev;
     }
 
-    
+    deallocate( &tail, &head );
 
     return 0;
 }
