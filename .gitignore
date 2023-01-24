@@ -52,9 +52,9 @@ Mkfile.old
 dkms.conf
 
 # VS Code & My executables
-src/.vscode
-src/.vscode/launch.json
-src/.vscode/tasks.json
-src/.vscode/settings.json
-src/.vscode/c_cpp_properties.json
+.vscode
+.vscode/launch.json
+.vscode/tasks.json
+.vscode/settings.json
+.vscode/c_cpp_properties.json
 **/main
