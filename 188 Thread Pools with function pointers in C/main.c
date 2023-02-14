@@ -17,11 +17,12 @@
 #include <unistd.h>
 #include <time.h>
 
-#define THREAD_COUNT 8
+#define THREAD_COUNT 4
 
 typedef struct Task
 {
-    int a, b;
+    void ( *taskFunction )( int, int );
+    int arg1, arg2;
 } Task;
 
 Task            taskQueue[256];
@@ -29,11 +30,31 @@ int             taskCount = 0;
 pthread_mutex_t mutexQueue;
 pthread_cond_t  condQueue;
 
-void executeTask( Task *task )
+void sumAndProduct( int a, int b )
 {
     usleep( 50000 );
-    int result = task->a + task->b;
-    printf( "The sum of %d and %d is %d\n", task->a, task->b, result );
+    int sum  = a + b;
+    int prod = a * b;
+    printf( "The sum and product of %d and %d is %d and respectively %d\n", a, b, sum, prod );
+}
+
+void sum(int a, int b)
+{
+    usleep( 50000 );
+    int sum  = a + b;
+    printf( "The sum of %d and %d is %d \n", a, b, sum );
+}
+
+void prod(int a, int b)
+{
+    usleep( 50000 );
+    int prod  = a * b;
+    printf( "The prod of %d and %d is %d \n", a, b, prod );
+}
+
+void executeTask( Task *task )
+{
+    task->taskFunction(task->arg1, task->arg2);
 }
 
 void submitTask( Task task )
@@ -85,11 +106,12 @@ int main( int argc, char const *argv[] )
     }
     // Work
     srand( time( NULL ) );
-    for ( i = 0; i < 100; i++ )
+    for ( i = 0; i < 64; i++ )
     {
-        int  a = rand() % 100;
-        int  b = rand() % 100;
-        Task t = { .a = a, .b = b };
+        Task t = { 
+            .taskFunction = i % 2 == 0 ? &sum : &prod, 
+            .arg1 = rand() % 100, 
+            .arg2 = rand() % 100 };
         submitTask( t );
     }
 
